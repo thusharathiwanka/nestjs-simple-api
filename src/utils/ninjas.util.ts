@@ -1,4 +1,6 @@
-export const ninjas: Ninja[] = [
+import { NinjaEntity } from 'src/ninja/entities/ninja.entity';
+
+export const ninjas: NinjaEntity[] = [
   {
     id: '1679730748307',
     name: 'Hattori Hanzo',
