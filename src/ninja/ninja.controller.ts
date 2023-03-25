@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   NotFoundException,
   Param,
@@ -14,16 +15,16 @@ import { NinjaService } from './ninja.service';
 export class NinjaController {
   constructor(private readonly ninjaService: NinjaService) {}
 
-  // GET -> ninjas
-  @Get()
-  getNinjas(): Ninja[] {
-    return this.ninjaService.getNinjas();
-  }
-
   // GET -> ninjas?weapon=weapon
   @Get()
   getNinjasByWeapon(@Query('weapon') weapon: string): Ninja[] {
     return this.ninjaService.getNinjasByWeapon(weapon);
+  }
+
+  // GET -> ninjas
+  @Get()
+  getNinjas(): Ninja[] {
+    return this.ninjaService.getNinjas();
   }
 
   // GET -> ninjas/:id
@@ -49,7 +50,7 @@ export class NinjaController {
   }
 
   // DELETE -> ninjas/:id
-  @Put()
+  @Delete(':id')
   deleteNinja(@Param('id') id: string) {
     return this.ninjaService.deleteNinja(id);
   }

@@ -27,7 +27,7 @@ export class NinjaService {
   }
 
   createNinja(ninja: Ninja): Ninja {
-    const newNinja = { id: Date.now(), ...ninja };
+    const newNinja = { id: Date.now().toString(), ...ninja };
     this.ninjas.push(newNinja);
 
     return newNinja;
@@ -35,7 +35,7 @@ export class NinjaService {
 
   updateNinja(id: string, updateNinja: Ninja): Ninja {
     this.ninjas = this.ninjas.map((ninja) => {
-      if (ninja.id === id) return { ninja, ...updateNinja };
+      if (ninja.id === id) return { ...ninja, ...updateNinja };
 
       return ninja;
     });
@@ -44,8 +44,9 @@ export class NinjaService {
   }
 
   deleteNinja(id: string): Ninja {
+    const toBeDeleted = this.getNinjaById(id);
     this.ninjas = this.ninjas.filter((ninja) => ninja.id !== id);
 
-    return this.getNinjaById(id);
+    return toBeDeleted;
   }
 }
