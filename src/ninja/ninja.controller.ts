@@ -10,6 +10,7 @@ import {
   Query,
 } from '@nestjs/common';
 import {
+  ApiBadRequestResponse,
   ApiCreatedResponse,
   ApiNotFoundResponse,
   ApiOkResponse,
@@ -53,6 +54,7 @@ export class NinjaController {
 
   // POST -> ninjas
   @ApiCreatedResponse({ type: NinjaEntity })
+  @ApiBadRequestResponse()
   @Post()
   createNinja(@Body() ninja: NinjaCreateDto): NinjaEntity {
     return this.ninjaService.createNinja(ninja);
@@ -60,6 +62,7 @@ export class NinjaController {
 
   // PUT -> ninjas/:id
   @ApiOkResponse({ type: NinjaEntity })
+  @ApiBadRequestResponse()
   @Put(':id')
   updateNinja(
     @Param('id') id: string,
