@@ -1,7 +1,6 @@
-type Ninja = {
-  id: string;
+export class NinjaCreateDto {
   name: string;
   weapon: string;
   stealth: number;
   agility: number;
-};
+}

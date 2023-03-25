@@ -9,6 +9,9 @@ import {
   Put,
   Query,
 } from '@nestjs/common';
+import { NinjaCreateDto } from './dto/ninja-create.dto';
+import { NinjaUpdateDto } from './dto/ninja-update.dto';
+import { NinjaEntity } from './entities/ninja.entity';
 import { NinjaService } from './ninja.service';
 
 @Controller('ninjas')
@@ -17,19 +20,19 @@ export class NinjaController {
 
   // GET -> ninjas?weapon=weapon
   @Get()
-  getNinjasByWeapon(@Query('weapon') weapon: string): Ninja[] {
+  getNinjasByWeapon(@Query('weapon') weapon: string): NinjaEntity[] {
     return this.ninjaService.getNinjasByWeapon(weapon);
   }
 
   // GET -> ninjas
   @Get()
-  getNinjas(): Ninja[] {
+  getNinjas(): NinjaEntity[] {
     return this.ninjaService.getNinjas();
   }
 
   // GET -> ninjas/:id
   @Get(':id')
-  getNinjaById(@Param('id') id: string): Ninja {
+  getNinjaById(@Param('id') id: string): NinjaEntity {
     try {
       return this.ninjaService.getNinjaById(id);
     } catch (error) {
@@ -39,13 +42,13 @@ export class NinjaController {
 
   // POST -> ninjas
   @Post()
-  createNinja(@Body() ninja: Ninja) {
+  createNinja(@Body() ninja: NinjaCreateDto) {
     return this.ninjaService.createNinja(ninja);
   }
 
   // PUT -> ninjas/:id
   @Put(':id')
-  updateNinja(@Param('id') id: string, @Body() ninja: Ninja) {
+  updateNinja(@Param('id') id: string, @Body() ninja: NinjaUpdateDto) {
     return this.ninjaService.updateNinja(id, ninja);
   }
 
