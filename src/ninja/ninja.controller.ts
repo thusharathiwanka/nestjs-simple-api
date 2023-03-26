@@ -5,8 +5,8 @@ import {
   Get,
   NotFoundException,
   Param,
+  Patch,
   Post,
-  Put,
   Query,
 } from '@nestjs/common';
 import {
@@ -63,7 +63,7 @@ export class NinjaController {
   // PUT -> ninjas/:id
   @ApiOkResponse({ type: NinjaEntity })
   @ApiBadRequestResponse()
-  @Put(':id')
+  @Patch(':id')
   updateNinja(
     @Param('id') id: string,
     @Body() ninja: NinjaUpdateDto,
