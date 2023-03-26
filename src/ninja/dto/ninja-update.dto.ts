@@ -1,22 +1,19 @@
 import { ApiPropertyOptional } from '@nestjs/swagger';
-import { IsAlpha, IsNumber, IsNumberString, MaxLength } from 'class-validator';
+import { IsNumber, IsString, MaxLength } from 'class-validator';
 
 export class NinjaUpdateDto {
   @ApiPropertyOptional()
-  @IsNumberString()
-  id?: string;
-  @ApiPropertyOptional()
-  @IsAlpha()
+  @IsString()
   @MaxLength(100)
-  name?: string;
+  readonly name?: string;
   @ApiPropertyOptional()
-  @IsAlpha()
+  @IsString()
   @MaxLength(50)
-  weapon?: string;
+  readonly weapon?: string;
   @ApiPropertyOptional()
   @IsNumber()
-  stealth?: number;
+  readonly stealth?: number;
   @ApiPropertyOptional()
   @IsNumber()
-  agility?: number;
+  readonly agility?: number;
 }

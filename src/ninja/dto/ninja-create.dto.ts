@@ -1,19 +1,19 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsAlpha, IsNumber, MaxLength } from 'class-validator';
+import { IsNumber, IsString, MaxLength } from 'class-validator';
 
 export class NinjaCreateDto {
   @ApiProperty()
-  @IsAlpha()
+  @IsString()
   @MaxLength(100)
-  name: string;
+  readonly name: string;
   @ApiProperty()
-  @IsAlpha()
+  @IsString()
   @MaxLength(50)
-  weapon: string;
+  readonly weapon: string;
   @ApiProperty()
   @IsNumber()
-  stealth: number;
+  readonly stealth: number;
   @ApiProperty()
   @IsNumber()
-  agility: number;
+  readonly agility: number;
 }
