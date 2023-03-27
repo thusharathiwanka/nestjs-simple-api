@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+
 import { ninjas } from 'src/utils/ninjas.util';
 import { NinjaCreateDto } from './dto/ninja-create.dto';
 import { NinjaUpdateDto } from './dto/ninja-update.dto';

@@ -16,6 +16,7 @@ import {
   ApiOkResponse,
   ApiTags,
 } from '@nestjs/swagger';
+
 import { NinjaCreateDto } from './dto/ninja-create.dto';
 import { NinjaUpdateDto } from './dto/ninja-update.dto';
 import { NinjaEntity } from './entities/ninja.entity';

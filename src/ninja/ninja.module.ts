@@ -1,4 +1,5 @@
 import { Module } from '@nestjs/common';
+
 import { NinjaController } from './ninja.controller';
 import { NinjaService } from './ninja.service';
 
