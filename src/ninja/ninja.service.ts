@@ -36,11 +36,11 @@ export class NinjaService {
   }
 
   async updateNinja(
-    id: string,
+    id: number,
     ninjaUpdateDto: NinjaUpdateDto,
   ): Promise<Ninja> {
     const ninja = await this.ninjaRepository.preload({
-      id: +id,
+      id: id,
       ...ninjaUpdateDto,
     });
 

@@ -45,9 +45,9 @@ export class NinjaController {
   @ApiOkResponse({ type: Ninja })
   @ApiNotFoundResponse()
   @Get(':id')
-  getNinjaById(@Param('id') id: string) {
+  getNinjaById(@Param('id') id: number) {
     try {
-      return this.ninjaService.getNinjaById(+id);
+      return this.ninjaService.getNinjaById(id);
     } catch (error) {
       throw new NotFoundException(error.message);
     }
@@ -66,7 +66,7 @@ export class NinjaController {
   @ApiNotFoundResponse()
   @ApiBadRequestResponse()
   @Patch(':id')
-  updateNinja(@Param('id') id: string, @Body() ninja: NinjaUpdateDto) {
+  updateNinja(@Param('id') id: number, @Body() ninja: NinjaUpdateDto) {
     return this.ninjaService.updateNinja(id, ninja);
   }
 
@@ -74,7 +74,7 @@ export class NinjaController {
   @Delete(':id')
   @ApiOkResponse({ type: Ninja })
   @ApiNotFoundResponse()
-  deleteNinja(@Param('id') id: string) {
-    return this.ninjaService.deleteNinja(+id);
+  deleteNinja(@Param('id') id: number) {
+    return this.ninjaService.deleteNinja(id);
   }
 }
