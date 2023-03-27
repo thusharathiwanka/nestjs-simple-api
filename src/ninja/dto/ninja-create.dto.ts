@@ -1,6 +1,8 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsArray, IsNumber, IsString, MaxLength } from 'class-validator';
 
+import { Skill } from '../entities/skill.entity';
+
 export class NinjaCreateDto {
   @ApiProperty()
   @IsString()
@@ -22,5 +24,5 @@ export class NinjaCreateDto {
 
   @ApiProperty()
   @IsArray()
-  readonly skills: string[];
+  readonly skills: Skill[];
 }

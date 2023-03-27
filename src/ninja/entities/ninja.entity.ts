@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, ManyToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Skill } from './skill.entity';
 
 @Entity('ninjas')
 export class Ninja {
@@ -24,6 +25,6 @@ export class Ninja {
   agility: number;
 
   @ApiProperty()
-  @Column('json', { nullable: true })
+  @ManyToMany((type) => Skill, (skill) => skill.ninjas, { cascade: true })
   skills: string[];
 }
