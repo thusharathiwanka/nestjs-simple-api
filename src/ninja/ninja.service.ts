@@ -1,57 +1,57 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 
-import { ninjas } from 'src/utils/ninjas.util';
+import { Ninja } from './entities/ninja.entity';
 import { NinjaCreateDto } from './dto/ninja-create.dto';
 import { NinjaUpdateDto } from './dto/ninja-update.dto';
-import { Ninja } from './entities/ninja.entity';
 
 @Injectable()
 export class NinjaService {
-  private ninjas: Ninja[];
+  constructor(
+    @InjectRepository(Ninja)
+    private readonly ninjaRepository: Repository<Ninja>,
+  ) {}
 
-  constructor() {
-    this.ninjas = ninjas;
+  getNinjas(): Promise<Ninja[]> {
+    return this.ninjaRepository.find();
   }
 
-  getNinjas(): Ninja[] {
-    return this.ninjas;
+  async getNinjasByWeapon(weapon: string): Promise<Ninja[]> {
+    if (weapon) return this.ninjaRepository.findBy({ weapon: weapon });
+    return this.getNinjas();
   }
 
-  getNinjasByWeapon(weapon: string): Ninja[] {
-    if (weapon) return this.ninjas.filter((ninja) => ninja.weapon === weapon);
-    return this.ninjas;
-  }
+  async getNinjaById(id: number) {
+    const ninja = await this.ninjaRepository.findOne({ where: { id: id } });
 
-  getNinjaById(id: string): Ninja {
-    const ninja = this.ninjas.find((ninja) => ninja.id === id);
-
-    if (!ninja) throw new Error(`Ninja not found with id of ${id}`);
+    if (!ninja) throw new NotFoundException(`Ninja not found with id of ${id}`);
 
     return ninja;
   }
 
-  createNinja(ninja: NinjaCreateDto): Ninja {
-    const newNinja = { id: Date.now().toString(), ...ninja };
-
-    this.ninjas.push(newNinja);
-
-    return newNinja;
+  createNinja(ninjaCreateDto: NinjaCreateDto): Promise<Ninja> {
+    const newNinja = this.ninjaRepository.create(ninjaCreateDto);
+    return this.ninjaRepository.save(newNinja);
   }
 
-  updateNinja(id: string, updateNinja: NinjaUpdateDto): Ninja {
-    this.ninjas = this.ninjas.map((ninja) => {
-      if (ninja.id === id) return { ...ninja, ...updateNinja };
-
-      return ninja;
+  async updateNinja(
+    id: string,
+    ninjaUpdateDto: NinjaUpdateDto,
+  ): Promise<Ninja> {
+    const ninja = await this.ninjaRepository.preload({
+      id: +id,
+      ...ninjaUpdateDto,
     });
 
-    return this.getNinjaById(id);
+    if (!ninja) throw new NotFoundException(`Ninja not found with id of ${id}`);
+
+    return this.ninjaRepository.save(ninja);
   }
 
-  deleteNinja(id: string): Ninja {
-    const toBeDeleted = this.getNinjaById(id);
-    this.ninjas = this.ninjas.filter((ninja) => ninja.id !== id);
+  async deleteNinja(id: number): Promise<Ninja> {
+    const ninja = await this.getNinjaById(id);
 
-    return toBeDeleted;
+    return this.ninjaRepository.remove(ninja);
   }
 }

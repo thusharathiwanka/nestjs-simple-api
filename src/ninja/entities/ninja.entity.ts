@@ -5,7 +5,7 @@ import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 export class Ninja {
   @ApiProperty()
   @PrimaryGeneratedColumn()
-  id: string;
+  id: number;
 
   @ApiProperty()
   @Column()
@@ -24,6 +24,6 @@ export class Ninja {
   agility: number;
 
   @ApiProperty()
-  @Column('json', { array: true, nullable: true })
+  @Column('json', { nullable: true })
   skills: string[];
 }

@@ -30,14 +30,14 @@ export class NinjaController {
   // GET -> ninjas?weapon=weapon
   @ApiOkResponse({ type: Ninja, isArray: true })
   @Get()
-  getNinjasByWeapon(@Query('weapon') weapon: string): Ninja[] {
+  getNinjasByWeapon(@Query('weapon') weapon: string) {
     return this.ninjaService.getNinjasByWeapon(weapon);
   }
 
   // GET -> ninjas
   @ApiOkResponse({ type: Ninja, isArray: true })
   @Get()
-  getNinjas(): Ninja[] {
+  getNinjas() {
     return this.ninjaService.getNinjas();
   }
 
@@ -45,9 +45,9 @@ export class NinjaController {
   @ApiOkResponse({ type: Ninja })
   @ApiNotFoundResponse()
   @Get(':id')
-  getNinjaById(@Param('id') id: string): Ninja {
+  getNinjaById(@Param('id') id: string) {
     try {
-      return this.ninjaService.getNinjaById(id);
+      return this.ninjaService.getNinjaById(+id);
     } catch (error) {
       throw new NotFoundException(error.message);
     }
@@ -57,22 +57,24 @@ export class NinjaController {
   @ApiCreatedResponse({ type: Ninja })
   @ApiBadRequestResponse()
   @Post()
-  createNinja(@Body() ninja: NinjaCreateDto): Ninja {
+  createNinja(@Body() ninja: NinjaCreateDto) {
     return this.ninjaService.createNinja(ninja);
   }
 
   // PUT -> ninjas/:id
   @ApiOkResponse({ type: Ninja })
+  @ApiNotFoundResponse()
   @ApiBadRequestResponse()
   @Patch(':id')
-  updateNinja(@Param('id') id: string, @Body() ninja: NinjaUpdateDto): Ninja {
+  updateNinja(@Param('id') id: string, @Body() ninja: NinjaUpdateDto) {
     return this.ninjaService.updateNinja(id, ninja);
   }
 
   // DELETE -> ninjas/:id
   @Delete(':id')
   @ApiOkResponse({ type: Ninja })
-  deleteNinja(@Param('id') id: string): Ninja {
-    return this.ninjaService.deleteNinja(id);
+  @ApiNotFoundResponse()
+  deleteNinja(@Param('id') id: string) {
+    return this.ninjaService.deleteNinja(+id);
   }
 }
